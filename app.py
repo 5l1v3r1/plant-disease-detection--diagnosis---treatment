@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 import json
+from waitress import serve
 
 from io import BytesIO
 
@@ -12,7 +13,11 @@ app = Flask(__name__)
 # Load the model
 model = tf.keras.models.load_model('plant_disease.h5')
 img_width, img_height = 224, 224
-
+@app.route("/", methods=["GET"])
+def welcome():
+    return jsonify({
+        "message":"Welcome to Plant Disease Detection System"
+    })
 @app.route("/", methods=["POST"])
 
 def predict():
@@ -81,19 +86,19 @@ def predict():
         Congratulations! Your plant has been detected as uninfected. This is a positive sign of a healthy plant. To ensure the continued well-being of your crop, consider the following steps:
         Regular Inspection: Continue monitoring your plants regularly for any signs of disease or pest infestation. Early detection can help prevent problems from developing.
 
-Watering and Nutrition: Maintain a consistent watering schedule and provide the necessary nutrients to support optimal growth. Healthy plants are more resilient to potential threats.
+        Watering and Nutrition: Maintain a consistent watering schedule and provide the necessary nutrients to support optimal growth. Healthy plants are more resilient to potential threats.
 
-Crop Rotation: If applicable, practice crop rotation to prevent soil-borne diseases and pests from building up in the same area.
+        Crop Rotation: If applicable, practice crop rotation to prevent soil-borne diseases and pests from building up in the same area.
 
-Good Hygiene: Keep the growing area clean and free from debris that might harbor pests or diseases.
+        Good Hygiene: Keep the growing area clean and free from debris that might harbor pests or diseases.
 
-Beneficial Insects: Encourage the presence of beneficial insects, such as ladybugs or predatory mites, which can help control pest populations naturally.
+        Beneficial Insects: Encourage the presence of beneficial insects, such as ladybugs or predatory mites, which can help control pest populations naturally.
 
-Proper Pruning: Regularly trim any dead or diseased plant parts to prevent the spread of potential problems.
+        Proper Pruning: Regularly trim any dead or diseased plant parts to prevent the spread of potential problems.
 
-Stay Informed: Stay updated on local weather conditions and any emerging plant health issues in your area.
-''',
-    }, indent=4, sort_keys=False) 
+        Stay Informed: Stay updated on local weather conditions and any emerging plant health issues in your area.
+        ''',
+        }, indent=4, sort_keys=False) 
 
     response = app.response_class(
         response=json_data,
@@ -117,5 +122,5 @@ Stay Informed: Stay updated on local weather conditions and any emerging plant h
     # else:
     #     return jsonify({"crop": "unknown", "accuracy": 0.0})
 
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
+# if __name__ == "__main__":
+#     serve(app, host="0.0.0.0", port=8080)
