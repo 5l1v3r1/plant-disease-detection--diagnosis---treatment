@@ -2,4 +2,7 @@ Flask
 tensorflow
 Pillow
 numpy
+waitress
+
+
 
