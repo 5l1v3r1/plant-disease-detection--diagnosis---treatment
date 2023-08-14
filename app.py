@@ -121,6 +121,5 @@ def predict():
     #     return jsonify({"crop": class_name, "accuracy": highest_probability * 100})
     # else:
     #     return jsonify({"crop": "unknown", "accuracy": 0.0})
-
-# if __name__ == "__main__":
-#     serve(app, host="0.0.0.0", port=8080)
+if __name__ == "__main__":
+    serve(app, host="0.0.0.0", port=8080)
